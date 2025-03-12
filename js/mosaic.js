@@ -51,3 +51,22 @@ function processImage(image, mosaicCanvas){
   //render the data from the tiles array onto the final mosaicCanvas
   renderMosaic(tiles, mosaicCanvas);
 }
+
+//Render the calculated mosaic tiles onto Canvas
+async function renderMosaic (tiles, mosaicCanvas){
+  const mosaicCtx = mosaicCanvas.getContext('2d'); 
+  //set up the width and the height of the mosaicCanvas
+  //x,y are the upper left corner coorinates of each tile
+  mosaicCanvas.width = tiles[tiles.length -1].x + TILE_WIDTH; //tiles[tiles.length-1].x: the horizontal axis of the last tile 
+  mosaicCanvas.height = tiles[tiles.length -1].y + TILE_HEIGHT;
+  // + TILE_HEIGHT/WIDTH to ensure the Canvas contain all the tiles
+
+  //for loop to traverse the tiles array
+  for(const tile of tiles){
+    const tileImage = await fetchTile(tile.color); //asynchronous function to retrieve mosaic tiles of corresponding colors from the server
+    //once it done, use await to save the result to tileImage 
+    mosaicCtx.drawImage(tileImage, tile.x, tile.y, TILE_WIDTH, TILE_HEIGHT);
+  }
+}
+
+
