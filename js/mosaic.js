@@ -2,7 +2,7 @@
 
 const TILE_WIDTH = 16;
 const TILE_HEIGHT = 16;
-const SERVER_URL = "http://localhost:3000";
+const SERVER_URL = "http://localhost:8765";
 
 var exports = exports || null;
 if (exports) {
