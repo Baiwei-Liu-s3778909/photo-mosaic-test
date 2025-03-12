@@ -25,7 +25,7 @@ function calculateAverageColor(tile){
   const averageR = Math.round(r / pixels);
   const averageG = Math.round(g / pixels);
   const averageB = Math.round(b / pixels);
-  //return the hex value of the average color e.g:#ff0000 is mean red
+  //return the hex value of the average color e.g:#RRGGBB
   return `#${averageR.toString(16).padStart(2, '0')}${averageG.toString(16).padStart(2, '0')}${averageB.toString(16).padStart(2, '0')}`;
 }
 
