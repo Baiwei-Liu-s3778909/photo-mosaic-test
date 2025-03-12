@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function(){
     if(file){
       try{
         const img = await loadImage(file); //excute try function to load an image and process the image
+        console.log('Image loaded successfully');
         processImage(img, mosaicCanvas);
       } catch(error){ //excute catch if it appears the error 
         console.error('Failed to load image:', error);

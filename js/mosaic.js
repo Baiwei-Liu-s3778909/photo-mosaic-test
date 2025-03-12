@@ -71,9 +71,23 @@ async function renderMosaic (tiles, mosaicCanvas){
 
 //the process for retrieve the mosaic of the corrresponding color from the server
 async function fetchTile(color){
-  const response = await fetch(`${SERVER_URL}/color/${color.replace('#','')}`); //Fetch initiates a network request
-  //remove # because the URL from the server no need # 
+  const url = `${SERVER_URL}/color/${color.replace('#', '')}`; //remove # because the URL from the server no need # 
+  console.log('Fetching tile from:', url);
+
+  const response = await fetch(url); //Fetch initiates a network request
+  if(!response.ok){
+    throw new Error(`Failed to fetch tile: ${response.statusText}`);
+  }
+  
   const blob = await response.blob(); // convert response data into Blob object
   //Blog(binary data) cannot be directly drawn onto Canvas, Blog convert to imageBitmap can be used
-  return await createImageBitmap(blob); //the API provided by the browser
+  console.log('Blog type:', blob.type);
+  try{
+    const imageBitmap = await createImageBitmap(blob); //the API provided by the browser
+    return imageBitmap;
+  } catch(error){
+    console.error('Failed to create ImageBitmap:', error);
+    throw error;
+
+  }
 }
