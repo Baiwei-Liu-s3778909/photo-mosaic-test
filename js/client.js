@@ -1,5 +1,5 @@
 // Edit me. Feel free to create additional .js files.
-
+import{ processImage } from './mosaic.js';
 
 //load an image from client uploaded image
 async function loadImage(file) {
@@ -14,7 +14,7 @@ async function loadImage(file) {
   
 //monitor events and excute when the mosaic.html is fully loaded
 document.addEventListener('DOMContentLoaded', function(){
-  const imageInput = document.getElementById('image'); //get id="image" element
+  const imageInput = document.getElementById('imageInput'); //get id="imageInput" element
   const mosaicCanvas = document.getElementById('mosaicCanvas'); //get id="mosaicCanvas"
 
 
@@ -24,9 +24,9 @@ document.addEventListener('DOMContentLoaded', function(){
     const file = event.target.files[0];
     if(file){
       try{
-        const img = await loadImage(file); //excute try function to load an image and process the image
+        const image = await loadImage(file); //excute try function to load an image and process the image
         console.log('Image loaded successfully');
-        processImage(img, mosaicCanvas);
+        processImage(image, mosaicCanvas);
       } catch(error){ //excute catch if it appears the error 
         console.error('Failed to load image:', error);
       }

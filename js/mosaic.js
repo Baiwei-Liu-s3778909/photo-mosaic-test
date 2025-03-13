@@ -32,7 +32,7 @@ function calculateAverageColor(tile){
 
 //process the image and divides the image into tiles
 //calculate the average of tiles
-function processImage(image, mosaicCanvas){
+export function processImage(image, mosaicCanvas){
   const canvas = document.createElement('canvas'); 
   const ctx = canvas.getContext('2d'); //obtain 2D Canvas for drawing and operate pixel data
 
