@@ -72,22 +72,33 @@ async function renderMosaic (tiles, mosaicCanvas){
 //the process for retrieve the mosaic of the corrresponding color from the server
 async function fetchTile(color){
   const url = `${SERVER_URL}/color/${color.replace('#', '')}`; //remove # because the URL from the server no need # 
-  console.log('Fetching tile from:', url);
+  console.log('Fetching tile from:', url); //output url: http://localhost:8765/color/RRGGBB
 
   const response = await fetch(url); //Fetch initiates a network request
   if(!response.ok){
     throw new Error(`Failed to fetch tile: ${response.statusText}`);
   }
-  
-  const blob = await response.blob(); // convert response data into Blob object
-  //Blog(binary data) cannot be directly drawn onto Canvas, Blog convert to imageBitmap can be used
-  console.log('Blog type:', blob.type);
-  try{
-    const imageBitmap = await createImageBitmap(blob); //the API provided by the browser
-    return imageBitmap;
-  } catch(error){
-    console.error('Failed to create ImageBitmap:', error);
-    throw error;
+  //convert response data to SVG text format
+  const svgText = await response.text(); //get SVG text
+  const img = new Image();
 
-  }
+  return new Promise((resolve, reject) =>{
+    //resolve
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = TILE_WIDTH;
+      canvas.height = TILE_HEIGHT;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0,0, TILE_WIDTH, TILE_HEIGHT); //draw the loaded SVG image onto Canvas
+
+      //use ImageBitmap more efficient and less memory usage
+      createImageBitmap(canvas).then(resolve).catch(reject);
+    };
+    //reject
+    img.onerror = (error) => {
+      reject(new Error('Failed to load SVG image'));
+    };
+    //convert SVG text to Base64 encoding
+    img.src = `data:image/svg+xml;base64,${btoa(svgText)}`;//SVG to data URL
+  });
 }
