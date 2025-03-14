@@ -2,7 +2,8 @@
 // /             serves mosaic.html
 // /(js|css)/*   serves static files
 // /color/<hex>  generates a tile for the color <hex>
-//
+
+//const {processImage} =require('./js/mosaic.js');
 var mosaic = require('./js/mosaic.js');
 var fs = require('fs');
 var http = require('http');

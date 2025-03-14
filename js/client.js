@@ -1,5 +1,6 @@
 // Edit me. Feel free to create additional .js files.
-import{ processImage } from './mosaic.js';
+//import{ processImage } from './mosaic.js'; runs only in browser
+//const { processImage } = require('./mosaic.js');//runs only in Node.js
 
 //load an image from client uploaded image
 async function loadImage(file) {
