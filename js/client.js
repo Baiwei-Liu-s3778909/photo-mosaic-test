@@ -27,7 +27,8 @@ document.addEventListener('DOMContentLoaded', function(){
       try{
         const image = await loadImage(file); //excute try function to load an image and process the image
         console.log('Image loaded successfully');
-        processImage(image, mosaicCanvas);
+        const tiles = processImage(image, mosaicCanvas);
+        await renderMosaic(tiles, mosaicCanvas);
       } catch(error){ //excute catch if it appears the error 
         console.error('Failed to load image:', error);
       }
